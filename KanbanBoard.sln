@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.WebApi", "KanbanBoard.WebApi\KanbanBoard.WebApi.csproj", "{4283F251-2685-4D1D-AC72-EF59E6CBB82B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Core", "KanbanBoard.Core\KanbanBoard.Core.csproj", "{08AFE02B-AB7A-49E0-86A7-FB142D678E43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Database", "KanbanBoard.Database\KanbanBoard.Database.csproj", "{708104E7-18DD-4CEF-83FF-6591A626B27A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.EventConsumer", "KanbanBoard.EventConsumer\KanbanBoard.EventConsumer.csproj", "{3799EB68-ED62-4251-A4C0-CBC21A81B8C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.EventPublisher", "KanbanBoard.EventPublisher\KanbanBoard.EventPublisher.csproj", "{47E8A386-0E57-4F88-BC67-5282BAF12633}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KanbanBoard.Service", "KanbanBoard.Service\KanbanBoard.Service.csproj", "{09AE3450-27B8-4FAD-BB59-BFB1AB10ABA1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4283F251-2685-4D1D-AC72-EF59E6CBB82B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4283F251-2685-4D1D-AC72-EF59E6CBB82B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4283F251-2685-4D1D-AC72-EF59E6CBB82B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4283F251-2685-4D1D-AC72-EF59E6CBB82B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08AFE02B-AB7A-49E0-86A7-FB142D678E43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08AFE02B-AB7A-49E0-86A7-FB142D678E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08AFE02B-AB7A-49E0-86A7-FB142D678E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08AFE02B-AB7A-49E0-86A7-FB142D678E43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{708104E7-18DD-4CEF-83FF-6591A626B27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708104E7-18DD-4CEF-83FF-6591A626B27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708104E7-18DD-4CEF-83FF-6591A626B27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708104E7-18DD-4CEF-83FF-6591A626B27A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3799EB68-ED62-4251-A4C0-CBC21A81B8C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3799EB68-ED62-4251-A4C0-CBC21A81B8C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3799EB68-ED62-4251-A4C0-CBC21A81B8C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3799EB68-ED62-4251-A4C0-CBC21A81B8C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47E8A386-0E57-4F88-BC67-5282BAF12633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47E8A386-0E57-4F88-BC67-5282BAF12633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47E8A386-0E57-4F88-BC67-5282BAF12633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47E8A386-0E57-4F88-BC67-5282BAF12633}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09AE3450-27B8-4FAD-BB59-BFB1AB10ABA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09AE3450-27B8-4FAD-BB59-BFB1AB10ABA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09AE3450-27B8-4FAD-BB59-BFB1AB10ABA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09AE3450-27B8-4FAD-BB59-BFB1AB10ABA1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

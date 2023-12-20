@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\KanbanBoard.Database\KanbanBoard.Database.csproj" />
+      <ProjectReference Include="..\KanbanBoard.EventConsumer\KanbanBoard.EventConsumer.csproj" />
+      <ProjectReference Include="..\KanbanBoard.EventPublisher\KanbanBoard.EventPublisher.csproj" />
+      <ProjectReference Include="..\KanbanBoard.Service\KanbanBoard.Service.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Contracts" />
+      <Folder Include="Controllers" />
+      <Folder Include="RequestModels" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.25" />
+    </ItemGroup>
+
+</Project>
