@@ -15,11 +15,11 @@
 
     <ItemGroup>
       <Folder Include="Contracts" />
-      <Folder Include="Controllers" />
-      <Folder Include="RequestModels" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="log4net" Version="2.0.15" />
+      <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.25" />
     </ItemGroup>
 

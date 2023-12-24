@@ -5,7 +5,7 @@ namespace KanbanBoard.Database;
 
 public class DatabaseContext : DbContext
 {
-    public DbSet<BoardEntity> Boards { get; set; }
+    public DbSet<ListEntity> Lists { get; set; }
     public DbSet<CardEntity> Cards { get; set; }
 
     public DbSet<CardHistoryEntity> CardHistories { get; set; }

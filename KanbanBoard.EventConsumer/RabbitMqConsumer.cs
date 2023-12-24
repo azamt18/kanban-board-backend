@@ -6,11 +6,11 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-//
-// EXAMPLE OF USING MESSAGE BROKER SUBSCRIBER/CONSUMER
-//
 namespace KanbanBoard.EventConsumer
 {
+    /// <summary>
+    /// EXAMPLE OF USING MESSAGE BROKER SUBSCRIBER/CONSUMER
+    /// </summary>
     public class RabbitMqConsumer : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;

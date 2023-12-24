@@ -3,8 +3,8 @@ using KanbanBoard.Database;
 using KanbanBoard.EventConsumer;
 using KanbanBoard.EventPublisher;
 using KanbanBoard.Service;
-using KanbanBoard.Service.Board;
 using KanbanBoard.Service.Card;
+using KanbanBoard.Service.List;
 using KanbanBoard.WebApi.Helpers;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,7 +40,7 @@ builder.Services.AddHostedService<RabbitMqConsumer>();
 builder.Services.AddScoped<RabbitMqPublisher>();
 
 // Services
-builder.Services.AddScoped<BoardService>();
+builder.Services.AddScoped<ListService>();
 builder.Services.AddScoped<CardService>();
 
 
