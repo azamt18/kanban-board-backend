@@ -1,26 +1,28 @@
 ﻿using System.Text.Json.Serialization;
+using KanbanBoard.Core;
 using KanbanBoard.Database.Entities;
+using Newtonsoft.Json;
 
 namespace KanbanBoard.WebApi.ResponseContracts;
 
 public class ListContract
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public int Id { get; set; }
 
-    [JsonPropertyName("createdOn")]
-    public DateTime CreatedOn { get; set; }
+    [JsonProperty("createdOn")]
+    public string CreatedOn { get; set; }
 
-    [JsonPropertyName("updatedOn")]
-    public DateTime UpdatedOn { get; set; }
+    [JsonProperty("updatedOn")]
+    public string UpdatedOn { get; set; }
 
-    [JsonPropertyName("isClosed")]
+    [JsonProperty("isClosed")]
     public bool IsClosed { get; set; }
 
-    [JsonPropertyName("closedOn")]
-    public DateTime? ClosedOn { get; set; }
+    [JsonProperty("closedOn")]
+    public string? ClosedOn { get; set; }
 
-    [JsonPropertyName("title")]
+    [JsonProperty("title")]
     public string Title { get; set; }
 
     public CardContract[] Cards { get; set; }
@@ -30,10 +32,10 @@ public class ListContract
         return new ListContract()
         {
             Id = listEntity.Id,
-            CreatedOn = listEntity.CreatedOn,
-            UpdatedOn = listEntity.UpdatedOn,
+            CreatedOn = listEntity.CreatedOn.ConvertToDateTime(),
+            UpdatedOn = listEntity.UpdatedOn.ConvertToDateTime(),
             IsClosed = listEntity.IsClosed,
-            ClosedOn = listEntity.ClosedOn,
+            ClosedOn = listEntity.ClosedOn?.ConvertToDateTime(),
             Title = listEntity.Title,
             Cards = listEntity.Cards.Select(CardContract.ConvertToContract).ToArray()
         };

@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using KanbanBoard.Core.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace KanbanBoard.WebApi.RequestModels;
 
@@ -11,7 +12,7 @@ public class GetAllCardsRequestModel
     [FromQuery(Name = "dateEnd")] public string? DateEnd { get; set; }
     [FromQuery(Name = "priority")] public CardPriority? CardPriority { get; set; }
     [FromQuery(Name = "skip")] public int? Skip { get; set; }
-    [FromQuery(Name = "skip")] public int? Limit { get; set; }
+    [FromQuery(Name = "limit")] public int? Limit { get; set; }
 }
 
 public class GetAllCardsCountRequestModel
@@ -24,48 +25,48 @@ public class GetAllCardsCountRequestModel
 public class RegisterCardRequestModel
 {
     [Required(AllowEmptyStrings = false)]
-    [JsonPropertyName("title")]
+    [JsonProperty("title")]
     public string Title { get; set; }
 
     [Required(AllowEmptyStrings = false)]
-    [JsonPropertyName("description")]
+    [JsonProperty("description")]
     public string Description { get; set; }
     
     [Required]
-    [JsonPropertyName("priority")]
+    [JsonProperty("priority")]
     public CardPriority Priority { get; set; }
 
     [Required]
-    [JsonPropertyName("listId")]
+    [JsonProperty("listId")]
     public int ListId { get; set; }
 }
 
 public class UpdateTitleRequestModel
 {
     [Required(AllowEmptyStrings = false)]
-    [JsonPropertyName("title")]
+    [JsonProperty("title")]
     public string Title { get; set; }
 }
 public class UpdateDescriptionRequestModel
 {
     [Required(AllowEmptyStrings = false)]
-    [JsonPropertyName("description")]
+    [JsonProperty("description")]
     public string Description { get; set; }
 }
 public class UpdatePriorityRequestModel
 {
     [Required]
-    [JsonPropertyName("priority")]
+    [JsonProperty("priority")]
     public CardPriority CardPriority { get; set; }
 }
 
 public class MoveCardRequestModel
 {
     [Required]
-    [JsonPropertyName("sourceListId")]
+    [JsonProperty("sourceListId")]
     public int SourceListId { get; set; }
     
     [Required]
-    [JsonPropertyName("targetListId")]
+    [JsonProperty("targetListId")]
     public int TargetListId { get; set; }
 }

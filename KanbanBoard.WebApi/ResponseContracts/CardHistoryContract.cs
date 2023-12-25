@@ -1,27 +1,29 @@
 ﻿using System.Text.Json.Serialization;
+using KanbanBoard.Core;
 using KanbanBoard.Core.Enums;
 using KanbanBoard.Database.Entities;
+using Newtonsoft.Json;
 
 namespace KanbanBoard.WebApi.ResponseContracts;
 
 public class CardHistoryContract
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public int Id { get; set; }
 
-    [JsonPropertyName("cardId")]
+    [JsonProperty("cardId")]
     public int CardId { get; set; }
 
-    [JsonPropertyName("createdOn")]
-    public DateTime CreatedOn { get; set; }
+    [JsonProperty("createdOn")]
+    public string CreatedOn { get; set; }
 
-    [JsonPropertyName("type")]
-    public CardHistoryType Type { get; set; }
+    [JsonProperty("type")]
+    public CardHistoryType CardHistoryType { get; set; }
 
-    [JsonPropertyName("movedSourceListId")]
+    [JsonProperty("movedSourceListId")]
     public int? MovedSourceListId { get; set; }
 
-    [JsonPropertyName("movedTargetListId")]
+    [JsonProperty("movedTargetListId")]
     public int? MovedTargetListId { get; set; }
     
 
@@ -31,8 +33,8 @@ public class CardHistoryContract
         {
             Id = cardHistoryEntity.Id,
             CardId = cardHistoryEntity.CardId,
-            CreatedOn = cardHistoryEntity.CreatedOn,
-            Type = cardHistoryEntity.Type,
+            CreatedOn = cardHistoryEntity.CreatedOn.ConvertToDateTime(),
+            CardHistoryType = cardHistoryEntity.Type,
             MovedSourceListId = cardHistoryEntity.MovedSourceListId,
             MovedTargetListId = cardHistoryEntity.MovedTargetListId
         };

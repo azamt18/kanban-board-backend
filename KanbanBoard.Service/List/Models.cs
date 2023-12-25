@@ -15,7 +15,7 @@ public record struct RegisterListResult
 
 public record struct UpdateListModel
 {
-    public string Title { get; set; }
+    public string? Title { get; set; }
 }
 public record struct UpdateListResult
 {

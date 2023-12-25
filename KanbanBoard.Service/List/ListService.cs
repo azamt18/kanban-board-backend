@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using KanbanBoard.Core.Enums;
 using KanbanBoard.Database;
 using KanbanBoard.Database.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -16,21 +17,30 @@ public class ListService
 
     public async Task<IEnumerable<ListEntity>> GetAllLists()
     {
-        return _databaseContext.Lists.Any() 
-            ? await _databaseContext.Lists.ToArrayAsync()
+        return _databaseContext.Lists.Any(x => x.IsClosed == false)
+
+            ? await _databaseContext.Lists
+                .Where(x => x.IsClosed == false)
+                .Include(x => x.Cards)
+                .ThenInclude(x => x.CardHistories)
+                .ToArrayAsync()
+
             : Array.Empty<ListEntity>();
     }
 
-    public ListEntity? GetListById(int id)
+    public async Task<ListEntity?> GetListById(int id)
     {
-        return _databaseContext.Lists.FirstOrDefault(b => b.Id == id);
+        return await GetOne(x => x.Id == id);
     }
 
-    public async Task<ListEntity?> GetOne(Expression<Func<ListEntity?, bool>> expression, CancellationToken cancellationToken = default)
+    private async Task<ListEntity?> GetOne(Expression<Func<ListEntity?, bool>> expression, CancellationToken cancellationToken = default)
     {
-        return await _databaseContext.Lists.FirstOrDefaultAsync(expression, cancellationToken: cancellationToken);
+        return await _databaseContext.Lists
+            .Include(x => x.Cards)
+            .ThenInclude(x => x.CardHistories)
+            .FirstOrDefaultAsync(expression, cancellationToken: cancellationToken);
     }
-    
+
     public async Task<RegisterListResult> RegisterList(RegisterListModel model)
     {
         var result = new RegisterListResult();
@@ -40,8 +50,10 @@ public class ListService
             var listEntity = new ListEntity()
             {
                 Title = model.Title,
+                CreatedOn = DateTime.Now,
+                UpdatedOn = DateTime.Now,
             };
-        
+
             _databaseContext.Set<ListEntity>().Add(listEntity);
             _databaseContext.Lists.Add(listEntity);
             await _databaseContext.SaveChangesAsync();
@@ -63,7 +75,7 @@ public class ListService
 
         try
         {
-            var existingList = await _databaseContext.Lists.FirstOrDefaultAsync(b => b.Id == id);
+            var existingList = await GetOne(x => x.Id == id);
             if (existingList == null)
             {
                 result.ListNotExists = true;
@@ -71,6 +83,7 @@ public class ListService
             }
 
             existingList.Title = model.Title;
+            existingList.UpdatedOn = DateTime.Now;
 
             _databaseContext.Set<ListEntity>().Update(existingList);
             await _databaseContext.SaveChangesAsync();
@@ -89,20 +102,41 @@ public class ListService
     public async Task<DeleteListResult> CloseList(int id)
     {
         var result = new DeleteListResult();
+        var now = DateTime.Now;
 
         try
         {
-            var listEntity = _databaseContext.Lists.FirstOrDefault(b => b.Id == id);
+            var listEntity = await GetOne(x => x.Id == id);
             if (listEntity == null)
             {
                 result.ListNotExists = true;
                 return result;
             }
 
+            // update list itself
             listEntity.IsClosed = true;
-            listEntity.ClosedOn = DateTime.Now;
-
+            listEntity.ClosedOn = now;
             _databaseContext.Set<ListEntity>().Update(listEntity);
+
+            // update list items
+            foreach (var cardEntity in listEntity.Cards)
+            {
+                cardEntity.IsDeleted = true;
+                cardEntity.DeletedOn = now;
+                _databaseContext.Set<CardEntity>().Update(cardEntity);
+
+                // record history
+                var cardHistoryEntity = new CardHistoryEntity()
+                {
+                    CreatedOn = DateTime.Now,
+                    Type = CardHistoryType.Deleted,
+                    Card = cardEntity
+                };
+
+                _databaseContext.Set<CardHistoryEntity>().Add(cardHistoryEntity);
+                _databaseContext.CardHistories.Add(cardHistoryEntity);
+            }
+
             await _databaseContext.SaveChangesAsync();
 
             result.Success = true;

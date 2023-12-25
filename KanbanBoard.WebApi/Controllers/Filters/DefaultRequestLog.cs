@@ -33,7 +33,7 @@ public class DefaultRequestLog : ActionFilterAttribute, IAsyncActionFilter
                 }
                 catch (Exception e)
                 {
-                    // skip
+                    Console.WriteLine(e);
                 }
             }
             

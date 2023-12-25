@@ -1,49 +1,52 @@
 ﻿ using System.Text.Json.Serialization;
+ using KanbanBoard.Core;
  using KanbanBoard.Core.Enums;
  using KanbanBoard.Database.Entities;
+ using Newtonsoft.Json;
 
  namespace KanbanBoard.WebApi.ResponseContracts;
 
 public class CardContract
 {
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public int Id { get; set; }
 
-    [JsonPropertyName("createdOn")]
-    public DateTime CreatedOn { get; set; }
+    [JsonProperty("createdOn")]
+    public string CreatedOn { get; set; }
 
-    [JsonPropertyName("updatedOn")]
-    public DateTime UpdatedOn { get; set; }
+    [JsonProperty("updatedOn")]
+    public string UpdatedOn { get; set; }
 
-    [JsonPropertyName("isDeleted")]
+    [JsonProperty("isDeleted")]
     public bool IsDeleted { get; set; }
 
-    [JsonPropertyName("deletedOn")]
-    public DateTime? DeletedOn { get; set; }
+    [JsonProperty("deletedOn")]
+    public string? DeletedOn { get; set; }
 
-    [JsonPropertyName("title")]
+    [JsonProperty("title")]
     public string Title { get; set; }
 
-    [JsonPropertyName("description")]
+    [JsonProperty("description")]
     public string Description { get; set; }
 
-    [JsonPropertyName("priority")]
+    [JsonProperty("priority")]
     public CardPriority Priority { get; set; }
 
-    [JsonPropertyName("listId")]
+    [JsonProperty("listId")]
     public int ListId { get; set; }
 
-    [JsonPropertyName("history")]
+    [JsonProperty("history")]
     public CardHistoryContract[] HistoryContract { get; set; }
+    
     public static CardContract ConvertToContract(CardEntity cardEntity)
     {
         return new CardContract()
         {
             Id = cardEntity.Id,
-            CreatedOn = cardEntity.CreatedOn,
-            UpdatedOn = cardEntity.UpdatedOn,
+            CreatedOn = cardEntity.CreatedOn.ConvertToDateTime(),
+            UpdatedOn = cardEntity.UpdatedOn.ConvertToDateTime(),
             IsDeleted = cardEntity.IsDeleted,
-            DeletedOn = cardEntity.DeletedOn,
+            DeletedOn = cardEntity.DeletedOn?.ConvertToDateTime(),
             Title = cardEntity.Title,
             Description = cardEntity.Description,
             Priority = cardEntity.Priority,

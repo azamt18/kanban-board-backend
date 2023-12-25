@@ -5,17 +5,23 @@ namespace KanbanBoard.Database;
 
 public class DatabaseContext : DbContext
 {
-    public DbSet<ListEntity> Lists { get; set; }
-    public DbSet<CardEntity> Cards { get; set; }
+    public DbSet<ListEntity> Lists { get; set; } = null!;
+    public DbSet<CardEntity> Cards { get; set; } = null!;
+    public DbSet<CardHistoryEntity> CardHistories { get; set; } = null!;
 
-    public DbSet<CardHistoryEntity> CardHistories { get; set; }
-
-    public DatabaseContext(DbContextOptions options) : base(options)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
     }
     
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     optionsBuilder.UseSqlite("Data Source=kanban.db");
-    // }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+    }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+           optionsBuilder.UseSqlite("Data Source=kanban_board.db");
+        }
+    }
 }

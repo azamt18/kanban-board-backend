@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq.Expressions;
 using KanbanBoard.Core.Enums;
 using KanbanBoard.Database;
 using KanbanBoard.Database.Entities;
@@ -22,6 +23,7 @@ public class CardService
         try
         {
             var query = _databaseContext.Cards
+                .Where(c => c.IsDeleted == false)
                 .Include(c => c.ActiveList)
                 .Include(c => c.CardHistories)
                 .AsQueryable();
@@ -76,8 +78,7 @@ public class CardService
         try
         {
             var query = _databaseContext.Cards
-                .Include(c => c.ActiveList)
-                .Include(c => c.CardHistories)
+                .Where(c => c.IsDeleted == false)
                 .AsQueryable();
 
             // created date from
@@ -119,10 +120,15 @@ public class CardService
 
     public async Task<CardEntity?> GetCardById(int id)
     {
+        return await GetOne(c => c.Id == id);
+    }
+    
+    private async Task<CardEntity?> GetOne(Expression<Func<CardEntity?, bool>> expression, CancellationToken cancellationToken = default)
+    {
         return await _databaseContext.Cards
-            .Include(c => c.ActiveList)
-            .Include(c => c.CardHistories)
-            .FirstOrDefaultAsync(c => c.Id == id);
+            .Include(x => x.ActiveList)
+            .Include(x => x.CardHistories)
+            .FirstOrDefaultAsync(expression, cancellationToken: cancellationToken);
     }
 
     public async Task<RegisterCardResult> RegisterCard(RegisterCardModel model)
@@ -143,6 +149,7 @@ public class CardService
             var cardEntity = new CardEntity()
             {
                 CreatedOn = DateTime.Now,
+                UpdatedOn = DateTime.Now,
                 Title = model.Title,
                 Description = model.Description,
                 Priority = model.CardPriority,
@@ -163,11 +170,6 @@ public class CardService
             _databaseContext.Set<CardHistoryEntity>().Add(cardHistoryEntity);
             _databaseContext.CardHistories.Add(cardHistoryEntity);
 
-            // bind history to card
-            //todo check without this part
-            cardEntity.CardHistories.Add(cardHistoryEntity);
-            _databaseContext.Set<CardEntity>().Update(cardEntity);
-
             await _databaseContext.SaveChangesAsync();
             result.Success = true;
             result.CardEntity = cardEntity;
@@ -186,7 +188,7 @@ public class CardService
 
         try
         {
-            var existingCard = await _databaseContext.Cards.FirstOrDefaultAsync(c => c.Id == id);
+            var existingCard = await GetOne(c => c.Id == id);
             if (existingCard == null)
             {
                 result.CardNotExists = true;
@@ -226,7 +228,7 @@ public class CardService
 
         try
         {
-            var existingCard = await _databaseContext.Cards.FirstOrDefaultAsync(c => c.Id == id);
+            var existingCard = await GetOne(c => c.Id == id);
             if (existingCard == null)
             {
                 result.CardNotExists = true;
@@ -266,7 +268,7 @@ public class CardService
 
         try
         {
-            var existingCard = await _databaseContext.Cards.FirstOrDefaultAsync(c => c.Id == id);
+            var existingCard = await GetOne(c => c.Id == id);
             if (existingCard == null)
             {
                 result.CardNotExists = true;
@@ -306,7 +308,7 @@ public class CardService
 
         try
         {
-            var existingCard = await _databaseContext.Cards.FirstOrDefaultAsync(c => c.Id == id);
+            var existingCard = await GetOne(c => c.Id == id);
             if (existingCard == null)
             {
                 result.CardNotExists = true;
@@ -362,7 +364,7 @@ public class CardService
 
         try
         {
-            var existingCard = await _databaseContext.Cards.FirstOrDefaultAsync(c => c.Id == id);
+            var existingCard = await GetOne(c => c.Id == id);
             if (existingCard == null)
             {
                 result.CardNotExists = true;

@@ -9,6 +9,8 @@ using RegisterCardModel = KanbanBoard.Service.Card.RegisterCardModel;
 
 namespace KanbanBoard.WebApi.Controllers.Api;
 
+[ApiController]
+[Route("api/cards")]
 public class CardController : BaseController
 {
     private readonly CardService _cardService;
@@ -62,7 +64,7 @@ public class CardController : BaseController
         return NotFound();
     }
 
-    [HttpPost]
+    [HttpPost("post")]
     public async Task<IActionResult> RegisterCard([FromBody] RegisterCardRequestModel requestModel)
     {
         var result = await _cardService.RegisterCard(new RegisterCardModel()

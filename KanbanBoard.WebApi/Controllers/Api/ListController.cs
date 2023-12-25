@@ -16,7 +16,7 @@ public class ListController : ControllerBase
         _listService = listService;
     }
 
-    [HttpGet]
+    [HttpGet("get")]
     public async Task<IActionResult> GetAllLists()
     {
         var lists = await _listService.GetAllLists();
@@ -24,16 +24,16 @@ public class ListController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetListById(int id)
+    public async Task<IActionResult> GetListById(int id)
     {
-        var list = _listService.GetListById(id);
-        if (list != null)
-            return Ok(list);
+        var listEntity = await _listService.GetListById(id);
+        if (listEntity != null)
+            return Ok(ListContract.ConvertToContract(listEntity));
 
         return NotFound();
     }
 
-    [HttpPost]
+    [HttpPost("post")]
     public async Task<IActionResult> RegisterList([FromBody] RegisterListRequestModel requestModel)
     {
         var result = await _listService.RegisterList(new()
@@ -56,7 +56,7 @@ public class ListController : ControllerBase
         });
 
         if (result.Success)
-            return Ok(result.ListEntity);
+            return Ok(ListContract.ConvertToContract(result.ListEntity));
 
         if (result.ListNotExists)
         {
