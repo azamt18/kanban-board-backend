@@ -17,15 +17,9 @@ public class ListService
 
     public async Task<IEnumerable<ListEntity>> GetAllLists()
     {
-        return _databaseContext.Lists.Any(x => x.IsClosed == false)
-
-            ? await _databaseContext.Lists
-                .Where(x => x.IsClosed == false)
-                .Include(x => x.Cards)
-                .ThenInclude(x => x.CardHistories)
-                .ToArrayAsync()
-
-            : Array.Empty<ListEntity>();
+        return await _databaseContext.Lists
+            .Where(x => x.IsClosed == false)
+            .ToArrayAsync();
     }
 
     public async Task<ListEntity?> GetListById(int id)

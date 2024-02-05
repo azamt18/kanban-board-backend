@@ -3,8 +3,8 @@
 [Flags]
 public enum CardPriority
 {
-    None = 0,   /// 0
-    Low = 1,    /// 1
-    Medium = 2, /// 10
-    High = 4    /// 100
+    None,   /// 0
+    Low,    /// 1
+    Medium, /// 10
+    High    /// 100
 }

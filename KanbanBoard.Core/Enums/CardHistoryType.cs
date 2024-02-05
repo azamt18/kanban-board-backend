@@ -3,10 +3,10 @@
 [Flags]
 public enum CardHistoryType
 {
-    Created = 0,            /// 0
-    Deleted = 1,            /// 1
-    UpdatedTitle = 2,       /// 2
-    UpdatedDescription = 3, /// 4
-    UpdatedPriority = 4,    /// 16
-    MovedToList = 5         /// 32
+    Created,            /// 0
+    Deleted,            /// 1
+    UpdatedTitle,       /// 2
+    UpdatedDescription, /// 4
+    UpdatedPriority,    /// 16
+    MovedToList         /// 32
 }

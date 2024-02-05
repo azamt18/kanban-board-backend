@@ -39,8 +39,7 @@ public class CardService
             // created date to
             if (!string.IsNullOrEmpty(model.DateEnd))
             {
-                var dateTime = DateTime.ParseExact(model.DateEnd, "yyyy-MM-dd", CultureInfo.InvariantCulture,
-                        DateTimeStyles.None)
+                var dateTime = DateTime.ParseExact(model.DateEnd, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None)
                     .Date
                     .AddDays(1)
                     .AddMilliseconds(-1);
